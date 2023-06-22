@@ -1,11 +1,14 @@
 {
   "name": "next-exec",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "main": "dist/index.js",
+  "bin": {
+    "next-exec": "dist/next-exec.js"
+  },
   "license": "MIT",
   "scripts": {
     "build": "tsc -b src",
-    "test": "ts-node test/index.ts",
+    "test": "cd test && ts-node ../src/next-exec ts-node index.ts -T -O {\\\"module\\\":\\\"commonjs\\\"} src/tools/importFile",
     "lint": "eslint --fix"
   },
   "devDependencies": {
@@ -27,5 +30,13 @@
     "dotenv": "^16.3.1",
     "dotenv-expand": "^10.0.0",
     "minimist": "^1.2.8"
-  }
+  },
+  "types": "./dist/index.d.ts",
+  "description": "Get environment variables similar to Next.js from `.env` file, etc. and execute commands",
+  "keywords": [
+    "Next.js",
+    "cli",
+    "env"
+  ],
+  "author": "SoraKumo"
 }
