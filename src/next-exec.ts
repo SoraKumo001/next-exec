@@ -2,7 +2,6 @@
 
 import spawn from "cross-spawn";
 import minimist from "minimist";
-// eslint-disable-next-line import/no-unresolved
 import { loadNextEnv } from "./index";
 
 const printHelp = () => {
@@ -28,13 +27,18 @@ const main = () => {
     printHelp();
     process.exit();
   }
-
   loadNextEnv(params.c);
   if (command) {
     spawn(
-      command[0],
-      command.slice(1).map((v) => v.replace(/"/g, '\\"')),
-      { stdio: "inherit", shell: true }
+      `${command[0]} ${command
+        .slice(1)
+        .map((v) => v.replace(/"/g, '\\"'))
+        .map((v) => `"${v}"`)
+        .join(" ")}`,
+      {
+        stdio: "inherit",
+        shell: true,
+      }
     ).on("exit", function (exitCode: number) {
       process.exit(exitCode);
     });
